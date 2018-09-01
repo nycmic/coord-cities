@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-	<?= $form->field($model, 'address')->widget('\app\widgets\MapWidget', [
+	<?= $form->field($model, 'address')->widget('nycmic\ymaps\CoordsInput', [
 		'options' => ['id' => 'coords-input'],
 
 	]) ?>

@@ -54,14 +54,7 @@ class Place extends \yii\db\ActiveRecord
 	 */
     public function prepareDistanceInKm()
     {
-    	$data = self::find()->asArray()->all();
 	    $fromPlace = self::findOne(['address'=>Yii::$app->request->get('SearchPlace')['id']]);
-    	$ids = DistanceService::calcProximity($data, $fromPlace);
-	    $modelsObj = self::find()
-	                      ->where(['id' => $ids]) // find only needed id's
-	                      ->orderBy([new \yii\db\Expression('FIELD(id, '. implode(',', $ids) . ')')]) // sorting them as in array
-	                      ->all();
-
 	    return DistanceService::calcDistance($fromPlace->lat, $fromPlace->lng, $this->lat, $this->lng) / 1000;
     }
 }

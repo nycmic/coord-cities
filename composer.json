@@ -29,9 +29,7 @@
         "codeception/verify": "~0.3.1",
         "codeception/specify": "~0.4.3",
         "kartik-v/yii2-widget-select2": "@dev",
-        "kl83/yii2-ymaps": "@dev",
-        "mirocow/yii2-yandex-maps" : "*",
-        "phpnt/yandex-map": "*"
+        "nycmic/yii2-ymaps": "*"
     },
     "config": {
         "process-timeout": 1800,
@@ -68,7 +66,7 @@
 
         {
             "type": "git",
-            "url": "https://github.com/mirocow/yii2-yandex-maps.git"
+            "url": "https://github.com/nycmic/yii2-ymaps.git"
         },
 
         {
