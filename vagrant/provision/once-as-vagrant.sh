@@ -22,7 +22,11 @@ echo "Done!"
 
 info "Install project dependencies"
 cd /app
+composer --no-progress update
 composer --no-progress --prefer-dist install
+
+info "Apply migrations"
+php yii migrate up --interactive=0
 
 info "Create bash-alias 'app' for vagrant user"
 echo 'alias app="cd /app"' | tee /home/vagrant/.bash_aliases
