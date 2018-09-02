@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3cec575d09d3b3496533d1c206d306eb",
+    "content-hash": "ee384a9b5038406d15895d6ecd28c17d",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -881,12 +881,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d"
+                "reference": "83b5716aee90e1f733512942c635ac350cbd533c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/83b5716aee90e1f733512942c635ac350cbd533c",
+                "reference": "83b5716aee90e1f733512942c635ac350cbd533c",
                 "shasum": ""
             },
             "require": {
@@ -927,7 +927,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14T21:17:01+00:00"
+            "time": "2018-09-01T02:07:49+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -1150,84 +1150,6 @@
             "time": "2018-08-18T05:15:24+00:00"
         },
         {
-            "name": "kl83/yii2-ymaps",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kl83/yii2-ymaps.git",
-                "reference": "6692439070b6ea128e12ebbbe3741d6f73a6c7d6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kl83/yii2-ymaps/zipball/6692439070b6ea128e12ebbbe3741d6f73a6c7d6",
-                "reference": "6692439070b6ea128e12ebbbe3741d6f73a6c7d6",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "^2.0.0",
-                "yiisoft/yii2-jui": "^2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "kl83\\ymaps\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Aleksandr Solovyov",
-                    "email": "solovyov.a.a.19@gmail.com"
-                }
-            ],
-            "description": "Yii2 Yandex Maps toolkit",
-            "time": "2018-08-24T11:38:36+00:00"
-        },
-        {
-            "name": "mirocow/yii2-yandex-maps",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mirocow/yii2-yandex-maps.git",
-                "reference": "360cf55f1f46edf6bb7b1ad1f1a258fcd1e2f387"
-            },
-            "require": {
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-0": {
-                    "mirocow\\yandexmaps\\": ""
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mirocow",
-                    "email": "mr.mirocow@gmail.com",
-                    "homepage": "http://www.mirocow.com"
-                }
-            ],
-            "description": "Yii 2 yandex map module",
-            "keywords": [
-                "map",
-                "yandex",
-                "yii",
-                "yii2"
-            ],
-            "support": {
-                "issues": "https://github.com/Mirocow/yii2-yandex-maps/issues?state=open",
-                "wiki": "http://www.yiidoc.com/wiki/",
-                "source": "https://github.com/Mirocow/yii2-yandex-maps"
-            },
-            "time": "2017-09-27T23:38:24+00:00"
-        },
-        {
             "name": "myclabs/deep-copy",
             "version": "1.7.0",
             "source": {
@@ -1271,6 +1193,36 @@
                 "object graph"
             ],
             "time": "2017-10-19T19:58:43+00:00"
+        },
+        {
+            "name": "nycmic/yii2-ymaps",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nycmic/yii2-ymaps.git",
+                "reference": "7f7328ae6d8515ae335229941443d8c878351717"
+            },
+            "require": {
+                "yiisoft/yii2": "^2.0.0",
+                "yiisoft/yii2-jui": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "nycmic\\ymaps\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mic Nyc",
+                    "email": "micnyc8@gmail.com"
+                }
+            ],
+            "description": "Yii2 Yandex Maps toolkit",
+            "time": "2018-09-01T20:53:50+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -1525,51 +1477,6 @@
                 }
             ],
             "time": "2017-07-14T14:27:02+00:00"
-        },
-        {
-            "name": "phpnt/yandex-map",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpnt/yandex-map.git",
-                "reference": "38e48bafa496202f29dd3776d138e53ec0303374"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpnt/yandex-map/zipball/38e48bafa496202f29dd3776d138e53ec0303374",
-                "reference": "38e48bafa496202f29dd3776d138e53ec0303374",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "phpnt\\yandexMap\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "phpNT",
-                    "email": "phpnt@phpnt.com",
-                    "homepage": "http://phpnt.com"
-                }
-            ],
-            "description": "Yii2 Yandex Map widget",
-            "keywords": [
-                "map",
-                "phpnt",
-                "widget",
-                "yandex",
-                "yii2"
-            ],
-            "time": "2017-04-28T16:29:40+00:00"
         },
         {
             "name": "phpspec/php-diff",
@@ -3681,13 +3588,12 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "yandex/geo": 20,
-        "kartik-v/yii2-widget-select2": 20,
-        "kl83/yii2-ymaps": 20
+        "kartik-v/yii2-widget-select2": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=7.0"
     },
     "platform-dev": []
 }
