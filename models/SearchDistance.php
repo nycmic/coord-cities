@@ -41,7 +41,7 @@ class SearchDistance extends Distance
      */
     public function search($params)
     {
-        $query = Distance::find();
+        $query = Distance::find()->with('placeTo');
 
         // add conditions that should always apply here
 

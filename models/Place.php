@@ -79,7 +79,7 @@ class Place extends \yii\db\ActiveRecord
     			if($fromPlace['id'] == $toPlace['id']) continue;
     			$rows[$key]['from_id'] = $fromPlace['id'];
     			$rows[$key]['to_id'] = $toPlace['id'];
-			    $rows[$key]['distance'] = (int)DistanceService::calcDistanceByPlaces($fromPlace, $toPlace)/1000;
+			    $rows[$key]['distance'] = round(DistanceService::calcDistanceByPlaces($fromPlace, $toPlace)/1000, 1);
 		    }
 
 		    if(Yii::$app->db->createCommand()->batchInsert(Distance::tableName(), ['from_id', 'to_id', 'distance'], $rows)->execute()) {
@@ -102,7 +102,7 @@ class Place extends \yii\db\ActiveRecord
 		foreach ($total as $key => $value){
 			$rows[$key]['from_id'] = $value->placeFrom->id;
 			$rows[$key]['to_id'] = $this->id;
-			$rows[$key]['distance'] = DistanceService::calcDistanceByPlaces($value->placeFrom, $this);
+			$rows[$key]['distance'] = round(DistanceService::calcDistanceByPlaces($value->placeFrom, $this)/1000, 1);
 		}
 
 		Yii::$app->db->createCommand()->batchInsert(Distance::tableName(), ['from_id', 'to_id', 'distance'], $rows)->execute();

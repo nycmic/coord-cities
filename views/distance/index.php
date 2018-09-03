@@ -6,8 +6,9 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SearchDistance */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$fromName = $searchModel->placeFrom->address?$searchModel->placeFrom->address: '';
 
-$this->title = 'Distances';
+$this->title = 'Distances from place:'.' '.$fromName;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="distance-index">
@@ -17,6 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
+		<?= Html::a('Create Place', ['places/create'], ['class' => 'btn btn-success']) ?>
+
+        <?= Html::a('Show Places', ['places/index'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <p>
+
         <?php //echo  Html::a('Create Distance', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
@@ -25,14 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
 	        [
+	                'label' => 'To place',
 		        'attribute' => 'to_id',
 		        'filter' => \kartik\select2\Select2::widget([
 				        'model' => $searchModel,
-				        'attribute' => 'from_id',
+				        'attribute' => 'to_id',
 				        'data' => yii\helpers\ArrayHelper::map(\app\models\Place::find()->orderBy('address')->asArray()->all(),'id','address'),
 				        'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
 				        'hideSearch' => false,
-				        'options' => ['placeholder' => 'Find place...', 'value' => Yii::$app->request->get('SearchDistance')['from_id']],
+				        'options' => ['placeholder' => 'Find place...'],
 				        'pluginOptions' => [
 					        'allowClear' => true,
 				        ],
@@ -53,7 +62,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
 	            'attribute'=>'distance',
 	            'label' => 'Distance Km',
-                'filter' => false
+                'filter' => false,
+                'value' => function ($model) {
+                    return Yii::$app->formatter->asInteger($model->distance).' km';
+		        }
             ],
 
 
