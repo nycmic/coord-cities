@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\services\DistanceService;
 use Yii;
 
 /**
@@ -64,4 +65,5 @@ class Distance extends \yii\db\ActiveRecord
 	{
 		return $this->hasOne(Place::className(),['id' => 'to_id']);
 	}
+
 }

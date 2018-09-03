@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Distance;
 use phpDocumentor\Reflection\Types\Self_;
 use Yii;
 use app\models\Place;
@@ -40,7 +41,7 @@ class PlacesController extends Controller
         $dataProvider = $searchModel->search([]);
 
 	    if($place = $searchModel::findOne(Yii::$app->request->get('SearchPlace')['id'])){
-	    	$place->createDistances();
+	    	$place->createMultipleDistances();
 		    $this->redirect(\Yii::$app->urlManager->createUrl(['distance/index', 'SearchDistance[from_id]'=> $place->id]));
 	    }
 
@@ -71,9 +72,9 @@ class PlacesController extends Controller
     public function actionCreate()
     {
         $model = new Place();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+	    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		    $model->createSingleDistance();
+		    return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [

@@ -70,46 +70,4 @@ class SearchPlace extends Place
 
         return $dataProvider;
     }
-
-	/**
-	 * Creates data provider instance with search query applied
-	 *
-	 * @param array $params
-	 *
-	 * @return ActiveDataProvider
-	 */
-	public function sortByDistance($params)
-	{
-		$query = self::find();
-		if(isset($params['SearchPlace']['id']) && !empty($params['SearchPlace']['id'])){
-			$find = Place::find()->asArray()->all();
-			$ids = DistanceService::calcProximity($find, Place::findOne(['address'=>Yii::$app->request->get('SearchPlace')['id']]));
-			$query = Place::find()
-			              ->where(['id' => $ids]) // find only needed id's
-			              ->orderBy([new \yii\db\Expression('FIELD(id, '. implode(',', $ids) . ')')]);
-		}
-
-		$dataProvider = new ActiveDataProvider([
-			'query' => $query,
-		]);
-
-		$this->load($params);
-
-		if (!$this->validate()) {
-			// uncomment the following line if you do not want to return any records when validation fails
-			// $query->where('0=1');
-			return $dataProvider;
-		}
-
-		// grid filtering conditions
-		$query->andFilterWhere([
-			'id' => $this->id,
-		]);
-
-		$query->andFilterWhere(['like', 'address', $this->address])
-		      ->andFilterWhere(['like', 'lat', $this->lat])
-		      ->andFilterWhere(['like', 'lng', $this->lng]);
-
-		return $dataProvider;
-	}
 }

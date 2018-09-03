@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'data' => yii\helpers\ArrayHelper::map(\app\models\Place::find()->asArray()->all(),'id','address'),
 						'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
 						'hideSearch' => false,
-						'options' => ['placeholder' => 'Choose your place...', 'value' => Yii::$app->request->get('SearchPlace')['id']],
+						'options' => ['placeholder' => 'Select place...', 'value' => Yii::$app->request->get('SearchPlace')['id']],
 						'pluginOptions' => [
 							'allowClear' => true,
 						],

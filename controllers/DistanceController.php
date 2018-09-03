@@ -40,7 +40,7 @@ class DistanceController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 	    if($place = Place::findOne(Yii::$app->request->get('SearchDistance')['from_id'])){
-		    $place->createDistances();
+		    $place->createMultipleDistances();
 	    }
 	    else{
 		    $this->redirect(\Yii::$app->urlManager->createUrl('places/index'));

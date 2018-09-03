@@ -70,7 +70,7 @@ class Place extends \yii\db\ActiveRecord
 	/**
 	 * @throws \yii\db\Exception
 	 */
-    public function createDistances()
+    public function createMultipleDistances()
     {
     	if(!$this->is_calculated){
     		$rows = [];
@@ -88,5 +88,24 @@ class Place extends \yii\db\ActiveRecord
 		    }
 	    }
     }
+
+
+	/**
+	 * @throws \yii\db\Exception
+	 */
+	public function createSingleDistance()
+	{
+		$total = Distance::find()->select('from_id')->distinct()->all();
+
+		$rows[] =[];
+
+		foreach ($total as $key => $value){
+			$rows[$key]['from_id'] = $value->placeFrom->id;
+			$rows[$key]['to_id'] = $this->id;
+			$rows[$key]['distance'] = DistanceService::calcDistanceByPlaces($value->placeFrom, $this);
+		}
+
+		Yii::$app->db->createCommand()->batchInsert(Distance::tableName(), ['from_id', 'to_id', 'distance'], $rows)->execute();
+	}
 
 }

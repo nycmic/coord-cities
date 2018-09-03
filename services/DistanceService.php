@@ -46,45 +46,14 @@ const EARTH_RADIUS = 6372795;
 	}
 
 	/**
-	 * @param array $from
-	 * @param array $to
+	 * @param array|Place $from
+	 * @param array|Place $to
 	 *
 	 * @return int
 	 */
-	public static function calcDistanceByPlaces(array $from, array $to)
+	public static function calcDistanceByPlaces($from, $to)
 	{
 		return self::calcDistanceByCoordinates($from['lat'], $from['lng'], $to['lat'], $to['lng']);
-	}
-
-	/**
-	 * Calculate the proximity within origin, walk in two direction within origin
-	 * @param array $data
-	 * @param $origin
-	 *
-	 * @return array
-	 */
-	public static function calcProximity(array $data, $origin)
-	{
-		$distances = [];
-		foreach($data as $key => $value){
-			$distances[$key]['id'] = $value['id'];
-			$distances[$key]['distance'] = self::calcDistance($origin->lat, $origin->lng, $value['lat'], $value['lng']);
-		}
-
-		usort($distances, function ($a, $b){
-			if ($a['distance'] == $b['distance']) {
-				return 0;
-			}
-			return ($a['distance'] < $b['distance']) ? -1 : 1;
-		});
-
-		$ids = [];
-		foreach($distances as $key=>$value){
-				$ids[$key] = $value['id'];
-		}
-		array_shift($ids);
-
-		return $ids;
 	}
 
 }
