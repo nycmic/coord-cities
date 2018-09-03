@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Codeception\Lib\Di;
 use Yii;
 use app\services\DistanceService;
 
@@ -12,9 +13,12 @@ use app\services\DistanceService;
  * @property string $address
  * @property string $lat
  * @property string $lng
+ * @property mixed distances
+ * @property int is_calculated
  */
 class Place extends \yii\db\ActiveRecord
 {
+	public $distance;
     /**
      * {@inheritdoc}
      */
@@ -49,12 +53,40 @@ class Place extends \yii\db\ActiveRecord
     }
 
 	/**
-	 * Calculate the proximity and distance within origin place
-	 * @return float|int
+	 * Get related model Distance
+	 *
+	 * @return \yii\db\ActiveQuery
 	 */
-    public function prepareDistanceInKm()
+    public function getDistances()
     {
-	    $fromPlace = self::findOne(['address'=>Yii::$app->request->get('SearchPlace')['id']]);
-	    return DistanceService::calcDistance($fromPlace->lat, $fromPlace->lng, $this->lat, $this->lng) / 1000;
+    	return $this->hasOne(Distance::className(),['from_id' => 'id']);
     }
+
+    public function getDistance()
+    {
+    	return $this->distances->distance;
+    }
+
+	/**
+	 * @throws \yii\db\Exception
+	 */
+    public function createDistances()
+    {
+    	if(!$this->is_calculated){
+    		$rows = [];
+    		$fromPlace = $this->getAttributes();
+    		foreach (self::find()->asArray()->all() as $key => $toPlace){
+    			if($fromPlace['id'] == $toPlace['id']) continue;
+    			$rows[$key]['from_id'] = $fromPlace['id'];
+    			$rows[$key]['to_id'] = $toPlace['id'];
+			    $rows[$key]['distance'] = (int)DistanceService::calcDistanceByPlaces($fromPlace, $toPlace)/1000;
+		    }
+
+		    if(Yii::$app->db->createCommand()->batchInsert(Distance::tableName(), ['from_id', 'to_id', 'distance'], $rows)->execute()) {
+			    $this->is_calculated = 1;
+			    return $this->save();
+		    }
+	    }
+    }
+
 }

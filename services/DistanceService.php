@@ -2,31 +2,31 @@
 
 namespace app\services;
 
-use Yii;
+use app\models\Place;
 
 /**
  * Class MapService helps work with coordinates
  * @package app\services
  */
-class DistanceService  {
+class DistanceService {
 
 const EARTH_RADIUS = 6372795;
 
 	/**
-	 * Calculate distance within two point
-	 * @param $latA
-	 * @param $lngA
-	 * @param $latB
-	 * @param $lngB
+	 * Calculate distance within two points
+	 * @param float $fromLat
+	 * @param float $fromLng
+	 * @param float $toLat
+	 * @param float $toLng
 	 *
-	 * @return float|int
+	 * @return int
 	 */
-	public static function calcDistance ($latA, $lngA, $latB, $lngB) {
+	private static function calcDistanceByCoordinates($fromLat, $fromLng, $toLat, $toLng) {
 
-		$lat1 = $latA * M_PI / 180;
-		$lat2 = $latB * M_PI / 180;
-		$long1 = $lngA * M_PI / 180;
-		$long2 = $lngB * M_PI / 180;
+		$lat1 = $fromLat * M_PI / 180;
+		$lat2 = $toLat * M_PI / 180;
+		$long1 = $fromLng * M_PI / 180;
+		$long2 = $toLng * M_PI / 180;
 
 		$cl1 = cos($lat1);
 		$cl2 = cos($lat2);
@@ -43,6 +43,17 @@ const EARTH_RADIUS = 6372795;
 		$dist = $ad * self::EARTH_RADIUS;
 
 		return (int)$dist;
+	}
+
+	/**
+	 * @param array $from
+	 * @param array $to
+	 *
+	 * @return int
+	 */
+	public static function calcDistanceByPlaces(array $from, array $to)
+	{
+		return self::calcDistanceByCoordinates($from['lat'], $from['lng'], $to['lat'], $to['lng']);
 	}
 
 	/**

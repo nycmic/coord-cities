@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SearchPlace */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -12,7 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="place-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+	<?php //Pjax::begin(); ?>
+    <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Create Place', ['create'], ['class' => 'btn btn-success']) ?>
@@ -28,12 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		        'filter' => \kartik\select2\Select2::widget([
 				        'model' => $searchModel,
 				        'attribute' => 'id',
-				        'data' => yii\helpers\ArrayHelper::map(\app\models\Place::find()->asArray()->all(),'address','address'),
+				        'data' => yii\helpers\ArrayHelper::map(\app\models\Place::find()->asArray()->all(),'id','address'),
 				        'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
 				        'hideSearch' => false,
-                        'options' => ['placeholder' => 'Choose your place...', 'onchange' => '
-                                
-                            '],
+                        'options' => ['placeholder' => 'Choose your place...'],
 				        'pluginOptions' => [
 					        'allowClear' => true,
 				        ],
@@ -52,4 +53,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+	<?php //Pjax::end(); ?>
 </div>

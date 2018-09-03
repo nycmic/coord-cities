@@ -2,18 +2,18 @@
 
 namespace app\controllers;
 
-use phpDocumentor\Reflection\Types\Self_;
-use Yii;
 use app\models\Place;
-use app\models\SearchPlace;
+use Yii;
+use app\models\Distance;
+use app\models\SearchDistance;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PlacesController implements the CRUD actions for Place model.
+ * DistanceController implements the CRUD actions for Distance model.
  */
-class PlacesController extends Controller
+class DistanceController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,27 +31,30 @@ class PlacesController extends Controller
     }
 
     /**
-     * Lists all Place models.
+     * Lists all Distance models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SearchPlace();
-        $dataProvider = $searchModel->search([]);
+        $searchModel = new SearchDistance();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-	    if($place = $searchModel::findOne(Yii::$app->request->get('SearchPlace')['id'])){
-	    	$place->createDistances();
-		    $this->redirect(\Yii::$app->urlManager->createUrl(['distance/index', 'SearchDistance[from_id]'=> $place->id]));
+	    if($place = Place::findOne(Yii::$app->request->get('SearchDistance')['from_id'])){
+		    $place->createDistances();
+	    }
+	    else{
+		    $this->redirect(\Yii::$app->urlManager->createUrl('places/index'));
 	    }
 
-        return $this->render('index', [
+
+	    return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Place model.
+     * Displays a single Distance model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -64,13 +67,13 @@ class PlacesController extends Controller
     }
 
     /**
-     * Creates a new Place model.
+     * Creates a new Distance model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Place();
+        $model = new Distance();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -82,7 +85,7 @@ class PlacesController extends Controller
     }
 
     /**
-     * Updates an existing Place model.
+     * Updates an existing Distance model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -102,7 +105,7 @@ class PlacesController extends Controller
     }
 
     /**
-     * Deletes an existing Place model.
+     * Deletes an existing Distance model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -116,15 +119,15 @@ class PlacesController extends Controller
     }
 
     /**
-     * Finds the Place model based on its primary key value.
+     * Finds the Distance model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Place the loaded model
+     * @return Distance the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Place::findOne($id)) !== null) {
+        if (($model = Distance::findOne($id)) !== null) {
             return $model;
         }
 

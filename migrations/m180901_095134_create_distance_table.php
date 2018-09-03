@@ -16,7 +16,7 @@ class m180901_095134_create_distance_table extends Migration
             'id' => $this->primaryKey(),
             'from_id' => $this->integer()->notNull(),
             'to_id' => $this->integer()->notNull(),
-            'distance' => $this->string(),
+            'distance' => $this->float(2),
         ]);
     }
 

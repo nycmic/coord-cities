@@ -24,6 +24,7 @@ class m180831_101918_create_place_table extends Migration
             'address' => $this->string()->notNull()->unique(),
             'lat' => $this->string()->notNull(),
             'lng' => $this->string()->notNull(),
+	        'is_calculated' => $this->integer(1)->defaultValue(0),
         ], $tableOptions);
     }
 
