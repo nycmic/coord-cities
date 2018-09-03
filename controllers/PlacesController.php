@@ -38,18 +38,38 @@ class PlacesController extends Controller
     public function actionIndex()
     {
         $searchModel = new SearchPlace();
-        $dataProvider = $searchModel->search([]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-	    if($place = $searchModel::findOne(Yii::$app->request->get('SearchPlace')['id'])){
-	    	$place->createMultipleDistances();
-		    $this->redirect(\Yii::$app->urlManager->createUrl(['distance/index', 'SearchDistance[from_id]'=> $place->id]));
-	    }
+//	    if($place = $searchModel::findOne(Yii::$app->request->get('SearchPlace')['id'])){
+//	    	$place->createMultipleDistances();
+//		    $this->redirect(\Yii::$app->urlManager->createUrl(['distance/index', 'SearchDistance[from_id]'=> $place->id]));
+//	    }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+
+	/**
+	 * Lists all Place models.
+	 * @return mixed
+	 */
+	public function actionCalculate()
+	{
+		$searchModel = new SearchPlace();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+	    if($place = $searchModel::findOne(Yii::$app->request->get('id'))){
+	    	$place->createMultipleDistances();
+		    $this->redirect(\Yii::$app->urlManager->createUrl(['distance/index', 'SearchDistance[from_id]'=> $place->id]));
+	    }
+
+		return $this->render('index', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
+	}
 
     /**
      * Displays a single Place model.

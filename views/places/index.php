@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Place;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -31,10 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		        'filter' => \kartik\select2\Select2::widget([
 				        'model' => $searchModel,
 				        'attribute' => 'id',
-				        'data' => yii\helpers\ArrayHelper::map(\app\models\Place::find()->asArray()->all(),'id','address'),
+				        'data' => yii\helpers\ArrayHelper::map(Place::find()->orderBy('address')->asArray()->all(),'id','address'),
 				        'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
 				        'hideSearch' => false,
-                        'options' => ['placeholder' => 'Select place...'],
+                        'options' => ['placeholder' => 'Find place...'],
 				        'pluginOptions' => [
 					        'allowClear' => true,
 				        ],
@@ -43,14 +44,22 @@ $this->params['breadcrumbs'][] = $this->title;
 	        ],
 	        [
 		        'attribute' => 'lat',
-		        'filter' => false
+//		        'filter' => false
 	        ],
 	        [
 		        'attribute' => 'lng',
-		        'filter' => false
+//		        'filter' => false
 	        ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete} {calculate}',
+                'buttons' => [
+                    'calculate' => function($url, $model, $key){
+                        return Html::a('<span class="btn btn-success">Calculate distances</span>', $url);
+                    }
+                ],
+            ],
         ],
     ]); ?>
 	<?php //Pjax::end(); ?>

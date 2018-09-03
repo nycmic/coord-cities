@@ -20,9 +20,18 @@ class m180901_095134_create_distance_table extends Migration
         ]);
 
 	    $this->addForeignKey(
-		    'fk-distance-place_id',
+		    'fk-distance-from_id-place-id',
 		    'distance',
 		    'from_id',
+		    'place',
+		    'id',
+		    'CASCADE'
+	    );
+
+	    $this->addForeignKey(
+		    'fk-distance-to_id-place-id',
+		    'distance',
+		    'to_id',
 		    'place',
 		    'id',
 		    'CASCADE'

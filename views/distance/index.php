@@ -29,10 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		        'filter' => \kartik\select2\Select2::widget([
 				        'model' => $searchModel,
 				        'attribute' => 'from_id',
-				        'data' => yii\helpers\ArrayHelper::map(\app\models\Place::find()->asArray()->all(),'id','address'),
+				        'data' => yii\helpers\ArrayHelper::map(\app\models\Place::find()->orderBy('address')->asArray()->all(),'id','address'),
 				        'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
 				        'hideSearch' => false,
-				        'options' => ['placeholder' => 'Select place...', 'value' => Yii::$app->request->get('SearchDistance')['from_id']],
+				        'options' => ['placeholder' => 'Find place...', 'value' => Yii::$app->request->get('SearchDistance')['from_id']],
 				        'pluginOptions' => [
 					        'allowClear' => true,
 				        ],
