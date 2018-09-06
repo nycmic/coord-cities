@@ -19,10 +19,6 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-	    'yandexMapsApi' =>
-	    [
-		    'class' => 'mirocow\yandexmaps\Api',
-	    ],
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,

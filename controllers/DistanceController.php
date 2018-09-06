@@ -2,10 +2,10 @@
 
 namespace app\controllers;
 
-use app\models\Place;
 use Yii;
 use app\models\Distance;
 use app\models\SearchDistance;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,28 +27,29 @@ class DistanceController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' =>[
+                'class' => AccessControl::className(),
+                'except' => ['index'],
+
+            ]
         ];
     }
 
     /**
      * Lists all Distance models.
      * @return mixed
+     * @param $from_id int
+     * @throws NotFoundHttpException
      */
-    public function actionIndex()
+    public function actionIndex($from_id)
     {
-        $searchModel = new SearchDistance();
+        $searchModel  = new SearchDistance();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-	    if($place = Place::findOne(Yii::$app->request->get('SearchDistance')['from_id'])){
-		    $place->createMultipleDistances();
-	    }
-	    else{
-		    $this->redirect(\Yii::$app->urlManager->createUrl('places/index'));
-	    }
+        $this->findPlaceModel($from_id);
 
-
-	    return $this->render('index', [
-            'searchModel' => $searchModel,
+        return $this->render('index', [
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -116,6 +117,22 @@ class DistanceController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Distance model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Distance the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findPlaceModel($id)
+    {
+        if (($model = Distance::find()->where(['from_id' => $id])->limit(1)->one()) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**

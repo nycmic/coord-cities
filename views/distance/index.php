@@ -6,9 +6,8 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SearchDistance */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$fromName = $searchModel->placeFrom->address?$searchModel->placeFrom->address: '';
 
-$this->title = 'Distances from place:'.' '.$fromName;
+$this->title = 'Distances from place:'.' '.$searchModel->placeFrom->address;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="distance-index">
@@ -23,17 +22,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Show Places', ['places/index'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <p>
-
-        <?php //echo  Html::a('Create Distance', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
 	        [
-	                'label' => 'To place',
+                'label' => 'To place',
 		        'attribute' => 'to_id',
 		        'filter' => \kartik\select2\Select2::widget([
 				        'model' => $searchModel,
@@ -49,16 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		        ),
 		        'value' => 'placeTo.address',
 	        ],
-	        [
-		        'attribute' => 'from_id',
-		        'value' => 'placeFrom.address',
-                'visible' => false
-	        ],
-	        [
-		        'attribute' => 'to_id',
-		        'value' => 'placeTo.address',
-                'visible' => false
-	        ],
             [
 	            'attribute'=>'distance',
 	            'label' => 'Distance Km',
@@ -70,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-            ['class' => 'yii\grid\ActionColumn'],
+//            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
     <?php //Pjax::end(); ?>

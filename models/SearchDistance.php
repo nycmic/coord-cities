@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Distance;
 
 /**
  * SearchDistance represents the model behind the search form of `app\models\Distance`.
@@ -30,6 +28,15 @@ class SearchDistance extends Distance
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function formName()
+    {
+        return '';
+
     }
 
     /**

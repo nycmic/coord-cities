@@ -45,11 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	        ],
 	        [
 		        'attribute' => 'lat',
-//		        'filter' => false
 	        ],
 	        [
 		        'attribute' => 'lng',
-//		        'filter' => false
 	        ],
 
             [
@@ -58,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'calculate' => function($url, $model, $key){
                         if ($model->is_calculated)
-	                        return Html::a('<span class="btn btn-success">Distances ready</span>', $url);
+	                        return Html::a('<span class="btn btn-success">Distances ready</span>', ['distance/index', 'from_id' => $model->id]);
                         else
                             return Html::a('<span class="btn btn-primary">Calculate distances</span>', $url);
                     }

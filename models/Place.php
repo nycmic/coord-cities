@@ -2,29 +2,39 @@
 
 namespace app\models;
 
-use Codeception\Lib\Di;
-use Yii;
-use app\services\DistanceService;
+use app\behaviors\DistanceBehavior;
+use app\interfaces\CalculateEventInterface;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "place".
  *
- * @property int $id
+ * @property int    $id
  * @property string $address
  * @property string $lat
  * @property string $lng
- * @property mixed distances
- * @property int is_calculated
+ * @property mixed  distances
+ * @property int    is_calculated
  */
-class Place extends \yii\db\ActiveRecord
+class Place extends ActiveRecord implements CalculateEventInterface
 {
-	public $distance;
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'place';
+    }
+
+    /**
+     * @return array|string
+     */
+    public function behaviors()
+    {
+        return [
+            DistanceBehavior::className(),
+        ];
     }
 
     /**
@@ -45,67 +55,10 @@ class Place extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id'      => 'ID',
             'address' => 'Address',
-            'lat' => 'Lat',
-            'lng' => 'Lng',
+            'lat'     => 'Lat',
+            'lng'     => 'Lng',
         ];
     }
-
-	/**
-	 * Get related model Distance
-	 *
-	 * @return \yii\db\ActiveQuery
-	 */
-    public function getDistances()
-    {
-    	return $this->hasOne(Distance::className(),['from_id' => 'id']);
-    }
-
-    public function getDistance()
-    {
-    	return $this->distances->distance;
-    }
-
-	/**
-	 * @throws \yii\db\Exception
-	 */
-    public function createMultipleDistances()
-    {
-    	if(!$this->is_calculated){
-    		$rows = [];
-    		$fromPlace = $this->getAttributes();
-    		foreach (self::find()->asArray()->all() as $key => $toPlace){
-    			if($fromPlace['id'] == $toPlace['id']) continue;
-    			$rows[$key]['from_id'] = $fromPlace['id'];
-    			$rows[$key]['to_id'] = $toPlace['id'];
-			    $rows[$key]['distance'] = round(DistanceService::calcDistanceByPlaces($fromPlace, $toPlace)/1000, 1);
-		    }
-
-		    if(Yii::$app->db->createCommand()->batchInsert(Distance::tableName(), ['from_id', 'to_id', 'distance'], $rows)->execute()) {
-			    $this->is_calculated = 1;
-			    return $this->save();
-		    }
-	    }
-    }
-
-
-	/**
-	 * @throws \yii\db\Exception
-	 */
-	public function createSingleDistance()
-	{
-		$total = Distance::find()->select('from_id')->distinct()->all();
-
-		$rows[] =[];
-
-		foreach ($total as $key => $value){
-			$rows[$key]['from_id'] = $value->placeFrom->id;
-			$rows[$key]['to_id'] = $this->id;
-			$rows[$key]['distance'] = round(DistanceService::calcDistanceByPlaces($value->placeFrom, $this)/1000, 1);
-		}
-
-		Yii::$app->db->createCommand()->batchInsert(Distance::tableName(), ['from_id', 'to_id', 'distance'], $rows)->execute();
-	}
-
 }
